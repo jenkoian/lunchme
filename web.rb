@@ -2,7 +2,7 @@ require 'sinatra'
 require 'sinatra/jsonapi'
 require 'sinatra/mongo'
 require 'json'
-
+  
 set :mongo, 'mongodb://tobias:tobias@linus.mongohq.com:10038/app12523429'
 
 venue = {

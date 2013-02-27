@@ -2,6 +2,8 @@ GEM
   remote: http://rubygems.org/
   specs:
     bson (1.8.2)
+    bson_ext (1.8.2)
+      bson (~> 1.8.2)
     daemons (1.1.9)
     eventmachine (1.0.0)
     json (1.7.7)
@@ -27,6 +29,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bson_ext
   sinatra (= 1.1.0)
   sinatra-jsonapi
   sinatra-mongo

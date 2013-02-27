@@ -15,6 +15,8 @@ venue = {
 
 get '/', :provides => 'html' do
    erb :index
+
+   {:venues => mongo["venue"].find.to_a}
 end
 
 get '/venues/' do

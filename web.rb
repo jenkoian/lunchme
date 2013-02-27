@@ -14,9 +14,9 @@ venue = {
 #puts mongo["venue"].insert venue
 
 get '/', :provides => 'html' do
+   @venues = mongo["venue"].find.to_a
+   
    erb :index
-
-   {:venues => mongo["venue"].find.to_a}
 end
 
 get '/venues/' do

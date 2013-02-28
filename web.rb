@@ -19,7 +19,7 @@ get '/', :provides => 'html' do
    erb :index
 end
 
-get '/venues/' do
+get '/venues' do
    api_response mongo["venue"].find.to_a
 end
 

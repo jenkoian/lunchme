@@ -8,10 +8,10 @@ set :mongo, 'mongodb://tobias:tobias@linus.mongohq.com:10038/app12523429'
 venue = {
 	:name => "CityArms",
 	:address => "Cardiff", 
+   :description => "",
 	:url => "",
 	:rating => 0
 }
-#puts mongo["venue"].insert venue
 
 get '/', :provides => 'html' do
    @venues = mongo["venue"].find.to_a
@@ -19,23 +19,38 @@ get '/', :provides => 'html' do
    erb :index
 end
 
-get '/venues' do
-   api_response mongo["venue"].find.to_a
+before do 
+   unless request.content_length.nil? || request.content_length.to_i < 2
+      venue = JSON.parse(request.body.read.to_s)
+      venue.delete(:id)
+   end
 end
 
-get '/venue/:id' do
-   api_response mongo["venue"].find("_id" => BSON::ObjectId(params[:id])).to_a
+def dress(mongo_object)
+   if mongo_object.respond_to?('map')
+      mongo_object.map do |o|
+         o["id"] = o["_id"].to_s
+         o.delete("_id")
+         o
+      end
+   end
 end
 
-post '/venue/' do
-   api_response mongo["venue"].insert JSON.parse(request.body.read.to_s)
+get '/venues/?:id?' do |id|
+   api_response dress(mongo["venue"].find.to_a) if id.nil?
+
+   api_response dress(mongo["venue"].find("_id" => BSON::ObjectId(id)).to_a).first
 end
 
-put '/venue/:id' do
-   mongo["venue"].update({"_id" => BSON::ObjectId(params[:id])}, JSON.parse(request.body.read.to_s))
-   api_response mongo["venue"].find("_id" => BSON::ObjectId(params[:id])).to_a
+post '/venues/?' do
+   api_response mongo["venue"].insert venue
 end
 
-delete '/venue/:id' do
-   api_response mongo["venue"].remove("_id" => BSON::ObjectId(params[:id]))
+put '/venues/:id' do |id|
+   mongo["venue"].update({"_id" => BSON::ObjectId(id)}, venue)
+   api_response dress(mongo["venue"].find("_id" => BSON::ObjectId(id)).to_a).first
+end
+
+delete '/venues/:id' do |id|
+   api_response mongo["venue"].remove("_id" => BSON::ObjectId(id))
 end

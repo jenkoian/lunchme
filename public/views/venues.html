@@ -1,5 +1,5 @@
-<ul>
+<ul ng-cloak>
    <li ng-repeat="venue in venues | orderBy:'name'">
-   {{ venue.name }} {{ venue.address }} {{ venue.dscription }} <a href="#" ng-click="downrate(venue)">-</a>{{ venue.rating }}<a href="#" ng-click="uprate(venue)">+</a>
+   {{ venue.name }} {{ venue.address }} {{ venue.dscription }} <i class="icon-arrow-down" ng-click="downrate(venue)"></i>{{ venue.rating }}<i class="icon-arrow-up" ng-click="uprate(venue)"></i>
    </li>
 </ul>    

@@ -8,14 +8,11 @@ lunchMeApp.controller('VenuesController', ['$scope', '$resource', function($scop
 
    $scope.venues = Venue.query();
 
-   $scope.uprate = function(venue) {
-      venue.rating = venue.rating != undefined ? parseInt(venue.rating) + 1 : 0;
-      var newVenue = new Venue(venue);
-      venue = newVenue.$update();
+   var rate = function(venue, modifier) {
+      venue.rating = venue.rating != undefined ? parseInt(venue.rating) + modifier : 1;
+      return venue;
    }
-   $scope.downrate = function(venue) {
-      venue.rating = venue.rating != undefined ? parseInt(venue.rating) - 1 : 0;
-      var newVenue = new Venue(venue);
-      venue = newVenue.$update();
-   }
+
+   $scope.uprate = function(venue) { rate(venue, 1).$update(); }
+   $scope.downrate = function(venue) { rate(venue, -1).$update(); }
 }]);

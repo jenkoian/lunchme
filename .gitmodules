@@ -1,0 +1,3 @@
+[submodule "spec/embedded-mongo"]
+	path = spec/embedded-mongo
+	url = git@github.com:athieriot/embedded-mongo.git

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+#While waiting Guard to work
+bundle exec guard

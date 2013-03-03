@@ -1,5 +1,3 @@
-# A sample Guardfile
-
-guard :shotgun do
-   watch('web.rb')
+guard 'rake', :task => 'test' do
+   watch(%r{^.*\.rb$})
 end
